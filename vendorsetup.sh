@@ -28,6 +28,34 @@ rm -rf hardware/xiaomi/megvii
 
 # Priv-keys
 echo 'Cloning private keys'
-git clone https://github.com/1xtAsh/vendor_lineage-priv_keys -b lineage-21 vendor/bliss-priv/keys
+git clone https://github.com/1xtAsh/vendor_lineage-priv_keys -b lineage-21 vendor/lineage-priv/keys
+
+# Leica patch
+echo 'Adding Leica camera patch'
+cd frameworks/base
+wget https://raw.githubusercontent.com/xiaomi-haydn-devs/Patch-Haydn/14/Leicamera/0001-Add-backwards-compatible-CaptureResultExtras-constructor.patch
+patch -p1 <0001-Add-backwards-compatible-CaptureResultExtras-constructor.patch
+cd ../..
+
+# Audio
+echo 'Adding audio-app support'
+cd system/core
+wget https://raw.githubusercontent.com/xiaomi-haydn-devs/Patch-Haydn/14/Audio-app-main/0001-Add-audio-app-support.patch
+patch -p1 <0001-Add-audio-app-support.patch
+cd ../..
+
+# Dolby
+echo 'Adding Dolby patch'
+cd frameworks/av
+wget https://raw.githubusercontent.com/xiaomi-haydn-devs/Patch-Haydn/14/Dolby/0004-Import-Dolby-Effects-initialization.patch
+patch -p1 <0004-Import-Dolby-Effects-initialization.patch
+cd ../..
+
+# Optimization
+echo 'Adding optimization patch'
+cd frameworks/base
+wget https://raw.githubusercontent.com/xiaomi-haydn-devs/Patch-Haydn/14/Optimization/0001-BootReceiver-Return-early-if-trace-pipe-doesnt-exists.patch
+patch -p1 <0001-BootReceiver-Return-early-if-trace-pipe-doesnt-exists.patch
+cd ../..
 
 echo 'delete vendorsetup.sh from device tree once this is done'
